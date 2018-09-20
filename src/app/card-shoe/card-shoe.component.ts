@@ -95,12 +95,21 @@ export class CardShoeComponent implements OnInit {
     newCard.name = card.name;
     newCard.value = card.value;
     newCard.countValue = card.countValue;
-    newCard.backImagePath = this.activeDeck.backImagePath;
     newCard.faceImagePath = faceImagePath;
-
     this.updatePlayedCards(newCard);
     return newCard;
   }
+
+  /**
+   * cardWithBack optimizes the implementation by not provided a path
+   * to the back of the card if the back will never be shown.
+   */
+  get cardWithBack() {
+    const cardWithBack = this.card;
+    cardWithBack.backImagePath = this.activeDeck.backImagePath;
+    return cardWithBack;
+  }
+
 
   /**
    * getCounterStats calculates the values for counting cards.

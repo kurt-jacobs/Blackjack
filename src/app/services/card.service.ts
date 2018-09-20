@@ -26,7 +26,7 @@ export class CardService {
   // Deal cards to the dealer. First card is face down.
   dealDealerCards() {
     const cards: DisplayableCardComponent[] = [];
-    const firstCard = this.shoe.card;
+    const firstCard = this.shoe.cardWithBack;
     firstCard.faceUp = false;
     cards.push(firstCard);
     cards.push(this.shoe.card);
