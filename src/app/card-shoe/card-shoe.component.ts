@@ -17,12 +17,17 @@ import {Card} from '../deck/cards/card';
 })
 
 export class CardShoeComponent implements OnInit {
-  activeDeck: DeckComponent ;
-  //availableCards: Card[] = [];
+  static DECKS_TO_USE = 5;
+  currentDeckIndex = 0;
+  virtualActiveCards = 0;
+  activeDeck: DeckComponent;
+  deckColors: string[] =
+    [CardConfigModel.GREEN, CardConfigModel.RED, CardConfigModel.YELLOW,
+      CardConfigModel.BLUE, CardConfigModel.GRAY];
   playedCards: Card[] = [];
 
   constructor() {
-    this.createCardShoe();
+    this.initialize();
   }
 
   ngOnInit() {
@@ -32,14 +37,9 @@ export class CardShoeComponent implements OnInit {
   /**
    * createCardShoe creates 1..N decks and adds each deck to the show.
    */
-  createCardShoe() {
-    this.activeDeck = new DeckComponent(CardConfigModel.GREEN);
-   // this.activeDeck.cards = this.availableCards.concat(this.activeDeck.cards);
-   // this.activeDeck.createDeck(CardConfigModel.GREEN));
-    // this.availableCards = this.availableCards.concat(deck.createDeck(CardConfigModel.GRAY));
-    // this.availableCards = this.availableCards.concat(deck.createDeck(CardConfigModel.YELLOW));
-    // this.availableCards = this.availableCards.concat(deck.createDeck(CardConfigModel.BLUE));
-    // this.availableCards = this.availableCards.concat(deck.createDeck(CardConfigModel.RED));
+  createDeck() {
+    this.activeDeck = new DeckComponent(new CardConfigModel());
+    this.activeDeck.deckBackingColor = this.deckColors[this.currentDeckIndex];
   }
 
   // Used for debug
@@ -60,9 +60,11 @@ export class CardShoeComponent implements OnInit {
   }
 
   initialize() {
-    this.activeDeck.cards.length = 0;
+    this.currentDeckIndex = 0;
+    this.virtualActiveCards =
+        CardShoeComponent.DECKS_TO_USE * DeckComponent.CARDS_IN_DECK;
     this.playedCards.length = 0;
-    this.createCardShoe();
+    this.createDeck();
   }
 
   /**
@@ -70,24 +72,34 @@ export class CardShoeComponent implements OnInit {
    * in the card shoe
    */
   get card(): DisplayableCardComponent {
-    if (this.activeDeck.cards.length > 0) {
-      const card = this.activeDeck.cards.pop();
-
-      // create a displayable card from a base card that doesn't have image
-      // path information.
-      const newCard = new DisplayableCardComponent();
-      const faceImagePath = '../assets/images/' + card.name + '.jpg';
-      newCard.name = card.name;
-      newCard.value = card.value;
-      newCard.countValue = card.countValue;
-      newCard.backImagePath = this.activeDeck.backImagePath;
-      newCard.faceImagePath = faceImagePath;
-
-      this.updatePlayedCards(newCard);
-      return newCard;
-    } else {
-      return null;
+    // if current active deck empty, create a new active deck.
+    if (this.activeDeck.cards.length === 0) {
+      // exhausted current deck. advance index of deck colors to next color.
+      this.currentDeckIndex = (this.currentDeckIndex + 1) % CardShoeComponent.DECKS_TO_USE;
+      // console.log('current deck index= ' + this.currentDeckIndex);
+      if (this.virtualActiveCards === 0) {
+        this.initialize();
+      } else {
+        this.createDeck();
+      }
     }
+
+    const card = this.activeDeck.cards.pop();
+    // virtualActiveCards holds the number of all cards in the shoe.
+    // which include a real active deck and N "virtual decks"
+    this.virtualActiveCards = this.virtualActiveCards - 1;
+    // create a displayable card from a base card that doesn't have image
+    // path information.
+    const newCard = new DisplayableCardComponent();
+    const faceImagePath = '../assets/images/' + card.name + '.jpg';
+    newCard.name = card.name;
+    newCard.value = card.value;
+    newCard.countValue = card.countValue;
+    newCard.backImagePath = this.activeDeck.backImagePath;
+    newCard.faceImagePath = faceImagePath;
+
+    this.updatePlayedCards(newCard);
+    return newCard;
   }
 
   /**
@@ -118,7 +130,7 @@ export class CardShoeComponent implements OnInit {
     }
 
     return new StatsModel(lowValue, neutralValue, highValue,
-      this.activeDeck.cards.length,
+      this.virtualActiveCards,
       this.playedCards.length);
   }
 }

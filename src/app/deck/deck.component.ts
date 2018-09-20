@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {CardConfigModel} from './cards/card.config.model';
-import {DisplayableCardComponent} from './cards/displayable-card/displayable-card.component';
 import {Card} from './cards/card';
 
 @Component({
@@ -12,16 +11,14 @@ import {Card} from './cards/card';
 export class DeckComponent implements OnInit {
   static CARDS_IN_DECK = 52;
   private deckCards: Card[] = [];
-  private cardConfig: CardConfigModel;
-  private _backImagePath;
+  private _deckColor: string;
 
-  constructor(deckColor: string) {
-      this.cardConfig = new CardConfigModel();
-      this.createDeck(deckColor);
+
+  constructor(private cardConfig: CardConfigModel) {
+      this.createDeck();
   }
 
-  createDeck(deckColor: string) {
-    this._backImagePath = this.cardConfig.getBacking(deckColor);
+  createDeck() {
     for (const card of this.cardConfig.cardNames) {
       for (const suit of this.cardConfig.cardSuits) {
         const newCard = new Card();
@@ -33,11 +30,13 @@ export class DeckComponent implements OnInit {
     }
 
     this.shuffle(this.deckCards , 52);
-   // return deckCards;
   }
 
+  set deckBackingColor(deckColor: string) {
+    this._deckColor = deckColor;
+  }
   get backImagePath(): string {
-    return this._backImagePath;
+    return this.cardConfig.getBacking(this._deckColor);
   }
 
   shuffle(deckCards: Card[] , shuffleCnt) {

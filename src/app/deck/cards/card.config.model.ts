@@ -36,6 +36,7 @@ export class CardConfigModel  {
     this.deckBackings[CardConfigModel.YELLOW] = '../assets/images/Yellow_back.jpg';
   }
 
+
   getBacking(key: string) {
     return this.deckBackings[key];
 }
