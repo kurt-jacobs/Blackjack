@@ -102,7 +102,9 @@ export class CardShoeComponent implements OnInit {
 
   /**
    * cardWithBack optimizes the implementation by not provided a path
-   * to the back of the card if the back will never be shown.
+   * to the back of the card if the back will never be s
+   * During game play, all cards are taken from the shoe.
+   * Each time a card is dealt, it is added to the played cards.
    */
   get cardWithBack() {
     const cardWithBack = this.card;

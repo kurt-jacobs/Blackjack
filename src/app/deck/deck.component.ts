@@ -13,14 +13,26 @@ export class DeckComponent implements OnInit {
   private deckCards: Card[] = [];
   private _deckColor: string;
 
+  static getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
-  constructor(private cardConfig: CardConfigModel) {
+  static shuffle(deckCards: Card[] , shuffleCnt) {
+    for (let i = 0; i < shuffleCnt; i++) {
+      const rndNo = DeckComponent.getRandomInt(0, (shuffleCnt - 1));
+      const card = deckCards[i];
+      deckCards[i] = deckCards[rndNo];
+      deckCards[rndNo] = card;
+    }
+  }
+
+  constructor(private cardConfigModel: CardConfigModel) {
       this.createDeck();
   }
 
   createDeck() {
-    for (const card of this.cardConfig.cardNames) {
-      for (const suit of this.cardConfig.cardSuits) {
+    for (const card of CardConfigModel.cardNames) {
+      for (const suit of CardConfigModel.cardSuits) {
         const newCard = new Card();
         newCard.name = card.name + suit;
         newCard.value = card.value;
@@ -29,23 +41,16 @@ export class DeckComponent implements OnInit {
       }
     }
 
-    this.shuffle(this.deckCards , 52);
+    DeckComponent.shuffle(this.deckCards , 52);
   }
 
   set deckBackingColor(deckColor: string) {
     this._deckColor = deckColor;
   }
   get backImagePath(): string {
-    return this.cardConfig.getBacking(this._deckColor);
-  }
-
-  shuffle(deckCards: Card[] , shuffleCnt) {
-    for (let i = 0; i < shuffleCnt; i++) {
-      const rndNo = this.getRandomInt(0, (shuffleCnt - 1));
-      const card = deckCards[i];
-      deckCards[i] = deckCards[rndNo];
-      deckCards[rndNo] = card;
-    }
+    const foo = this.cardConfigModel.getBacking(this._deckColor);
+    console.log('foo= ' + foo);
+    return foo;
   }
 
   get cards(): Card[] {
@@ -56,8 +61,5 @@ export class DeckComponent implements OnInit {
 
   }
 
-  getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
 
 }

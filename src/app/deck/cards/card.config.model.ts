@@ -8,8 +8,8 @@ export class CardConfigModel  {
   static YELLOW = 'Yellow';
 
 
-  cardSuits = ['S', 'H', 'D', 'C'];
-  cardNames: { name: string, value: number, countValue: number }[] = [
+  static cardSuits = ['S', 'H', 'D', 'C'];
+  static cardNames: { name: string, value: number, countValue: number }[] = [
     { 'name': '2',  'value': 2 , 'countValue': 1 },
     { 'name': '3',  'value': 3 , 'countValue': 1 },
     { 'name': '4',  'value': 4 , 'countValue': 1 },
@@ -25,8 +25,10 @@ export class CardConfigModel  {
     { 'name': 'A',  'value': 1 , 'countValue': -1 }
   ];
 
-
   deckBackings = [];
+
+
+ 
 
   constructor() {
     this.deckBackings[CardConfigModel.GRAY] = '../assets/images/Gray_back.jpg';
@@ -39,7 +41,7 @@ export class CardConfigModel  {
 
   getBacking(key: string) {
     return this.deckBackings[key];
-}
+  }
 
 
 }
