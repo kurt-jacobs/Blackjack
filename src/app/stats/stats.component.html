@@ -8,7 +8,7 @@
 
     <div class="box col-xs-12">
       <div  class=" box col-xs-2 custom black custom small">
-        Decks: {{ getDeckRemaining() |  number:'1.1-2'}}
+        Decks: {{ decksRemaining |  number:'1.1-2'}}
       </div>
 
       <div class="box col-xs-2 custom black">
@@ -16,7 +16,7 @@
       </div>
 
       <div class="box col-xs-2 custom black">
-        True: {{ getTrueCount() |  number:'1.0-0' }}
+        True: {{ trueCount |  number:'1.0-0' }}
       </div>
 
       <div class="box col-xs-2 custom blue">

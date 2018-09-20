@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import {StatsService} from '../services/stats.service';
 import {StatsModel} from './stats.model';
 import {DeckComponent} from '../deck/deck.component';
+import {CardService} from '../services/card.service';
 
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.css']
 })
-export class StatsComponent implements OnInit {
-
-  constructor(private statsService:  StatsService) { }
+export class StatsComponent implements OnInit, AfterContentInit {
   runningStats: StatsModel;
+
+  constructor(private statsService:  StatsService, private cardService: CardService) {
+
+  }
 
   ngOnInit() {
     this.runningStats = new StatsModel(0, 0, 0, 0, 0);
@@ -24,16 +27,21 @@ export class StatsComponent implements OnInit {
           this.runningStats.totalValue =  statsModel.totalValue;
           this.runningStats.availableCards = statsModel.availableCards;
           this.runningStats.playedCards = statsModel.playedCards;
+
         }
       );
   }
 
-  getDeckRemaining() {
-    console.log('available = ' + this.runningStats.availableCards);
+  ngAfterContentInit() {
+    this.cardService.requestUpdate();
+  }
+
+  get decksRemaining() {
+    console.log('decks remaining=' , this.runningStats.availableCards);
     return this.runningStats.availableCards / DeckComponent.CARDS_IN_DECK;
   }
 
-  getTrueCount() {
+  get trueCount() {
     const decksLeft = this.runningStats.availableCards / DeckComponent.CARDS_IN_DECK;
     return this.runningStats.totalValue / decksLeft;
   }
