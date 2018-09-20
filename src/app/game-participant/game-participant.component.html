@@ -1,0 +1,20 @@
+
+<div class="container" *ngIf="isGameStarted()">
+  <div class="row">
+    <div class="col-xs-4">
+      <h3>{{ title }}   ({{ playStatus }})</h3>
+    </div>
+    <!-- project content specific to either a dealer or player here -->
+    <ng-content> </ng-content>
+  </div>
+
+  <br>
+  <div class="row" *ngIf="cards">
+    <div class="col-xs-2" *ngFor="let card of cards">
+      <img [src]="card.getCardImage()"
+           alt="{{ card.name }}"
+           [ngClass]="colorCodedBorder(card)"
+           style="max-height: 180px;">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.border-white {
+  padding:5px;
+  border:5px solid #ffffff;
+}
+
+.border-red {
+  padding:5px;
+  border:5px solid #ff0000;
+}
+
+.border-blue {
+  padding:5px;
+  border:5px solid #0000ff;
+}
+
+.border-green {
+  padding:5px;
+  border:5px solid #166421;
+}
