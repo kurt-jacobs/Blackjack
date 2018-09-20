@@ -1,3 +1,8 @@
+/**
+ * Card serves as a base class for cards.  This class holds the numeric values
+ * for a bard but not any presentation information (card face, card back etc).
+ */
+
 export class Card {
   protected _name: string;
   protected _value: number;

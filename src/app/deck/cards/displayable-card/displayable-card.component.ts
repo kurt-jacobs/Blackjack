@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Card} from '../card';
 
+/**
+ * DisplayableCardComponent extends Card and holds information necessary when
+ * a card is to be presented, namely the face and back of the card.
+ */
+
 @Component({
   selector: 'app-displayable-card',
   templateUrl: './displayable-card.component.html',

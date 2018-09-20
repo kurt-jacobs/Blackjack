@@ -37,7 +37,6 @@ export class StatsComponent implements OnInit, AfterContentInit {
   }
 
   get decksRemaining() {
-    console.log('decks remaining=' , this.runningStats.availableCards);
     return this.runningStats.availableCards / DeckComponent.CARDS_IN_DECK;
   }
 
