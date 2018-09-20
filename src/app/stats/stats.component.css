@@ -1,0 +1,29 @@
+.box {
+  color: #fff;
+  background: #f5ffbf;
+  height:      45px;
+  line-height: 45px; /* Same as height  */
+}
+
+.custom {
+  font-family: Georgia;
+  font-size: 15px;
+}
+
+
+.custom.blue{
+  color: #1F1BFF;
+}
+
+.custom.red{
+  color: #FF0000;
+}
+
+.custom.green{
+  color: #166421;
+}
+.custom.black{
+  color: #000000;
+}
+
+
