@@ -54,7 +54,7 @@ export class CardShoeComponent implements OnInit {
     this.virtualActiveCards =
         CardShoeComponent.DECKS_TO_USE * DeckComponent.CARDS_IN_DECK;
     this.playedCards.length = 0;
-
+    this.stats = new StatsModel(this.virtualActiveCards,0,0,0);
     this.createDeck();
   }
 
