@@ -39,7 +39,7 @@ export class DealerComponent extends GameParticipantComponent implements OnInit 
         (cards: DisplayableCardComponent[]) => {
           this.cards = cards;
           const totalScore = this.calculateScore();
-          this.gameStarted = true;
+          this._gameStarted = true;
         }
       );
 

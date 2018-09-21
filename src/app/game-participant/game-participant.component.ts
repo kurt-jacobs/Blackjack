@@ -17,7 +17,7 @@ export class GameParticipantComponent implements OnInit {
   aceValueDelta = 10;     // value of ace upper bound added to the 1.
   @Input() title = '';   // Dealer, Player etc.
   cards: DisplayableCardComponent[] = [];
-  gameStarted = false;
+  _gameStarted = false;
   handClosed = false;
   playStatus = '';
   requestHitEnabled = true;
@@ -95,7 +95,6 @@ export class GameParticipantComponent implements OnInit {
       });
 
       for (let i = 0; i < cardsToCalc.length; i++) {
-
         if (cardsToCalc[i].faceUp) {
           if (cardsToCalc[i].value === 1) {
             acesFound = acesFound + 1;
@@ -115,15 +114,11 @@ export class GameParticipantComponent implements OnInit {
     return totalCardValue;
   }
 
-  /**
-   * isGameStarted hides the UI until the game has started.  The games is
-   * considered started when he first cards are dealt.  At that time, the
-   * controls (if any) and cards are displayed.
-   * it's face up.
-   */
-  isGameStarted()
+
+  get gameStarted()
   {
-    return this.gameStarted;
+    return this._gameStarted;
+
   }
 
 }
