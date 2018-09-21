@@ -26,7 +26,7 @@ export class DeckComponent implements OnInit {
     }
   }
 
-  constructor(private cardConfigModel: CardConfigModel) {
+  constructor() {
       this.createDeck();
   }
 

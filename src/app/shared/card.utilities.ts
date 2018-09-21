@@ -1,5 +1,6 @@
 import {DisplayableCardComponent} from '../deck/cards/displayable-card/displayable-card.component';
 import {BlackjackConstants} from './blackjack.constants';
+import {Card} from '../deck/cards/card';
 
 export class CardUtilities {
   static aceValueDelta = 10;     // value of ace upper bound added to the 1.
@@ -60,6 +61,14 @@ export class CardUtilities {
     }
 
     return totalCardValue;
+  }
+
+  // Used for debug
+  printDebug(cardsToPrint: Card[]) {
+    for (let i = 0; i < cardsToPrint.length; i++) {
+      console.log('Card = ' + i + '  ', cardsToPrint[i]);
+    }
+    console.log('Shoe cards= ' + cardsToPrint.length);
   }
 
 }

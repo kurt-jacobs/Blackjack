@@ -12,6 +12,13 @@ export class CardConfigModel  {
   static GREEN = 'Green';
   static YELLOW = 'Yellow';
 
+  static DECK_COLORS: string[] =
+    [ CardConfigModel.GREEN,
+      CardConfigModel.RED,
+      CardConfigModel.YELLOW,
+      CardConfigModel.BLUE,
+      CardConfigModel.GRAY];
+  
   static cardSuits = ['S', 'H', 'D', 'C'];
   static cardNames: { name: string, value: number, countValue: number }[] = [
     { 'name': '2',  'value': 2 , 'countValue': 1 },

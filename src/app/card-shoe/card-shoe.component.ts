@@ -17,13 +17,10 @@ import {Card} from '../deck/cards/card';
 })
 
 export class CardShoeComponent implements OnInit {
-  static DECKS_TO_USE = 5;
+  static DECKS_TO_USE = CardConfigModel.DECK_COLORS.length;
   currentDeckIndex = 0;
   virtualActiveCards = 0;
   activeDeck: DeckComponent;
-  deckColors: string[] =
-    [CardConfigModel.GREEN, CardConfigModel.RED, CardConfigModel.YELLOW,
-      CardConfigModel.BLUE, CardConfigModel.GRAY];
   playedCards: Card[] = [];
 
   constructor() {
@@ -38,17 +35,11 @@ export class CardShoeComponent implements OnInit {
    * createCardShoe creates 1..N decks and adds each deck to the show.
    */
   createDeck() {
-    this.activeDeck = new DeckComponent(new CardConfigModel());
-    this.activeDeck.deckBackingColor = this.deckColors[this.currentDeckIndex];
+    this.activeDeck = new DeckComponent();
+    this.activeDeck.deckBackingColor = CardConfigModel.DECK_COLORS[this.currentDeckIndex];
   }
 
-  // Used for debug
-  printDebug(cardsToPrint: Card[]) {
-    for (let i = 0; i < cardsToPrint.length; i++) {
-      console.log('Card = ' + i + '  ', cardsToPrint[i]);
-    }
-    console.log('Shoe cards= ' + cardsToPrint.length);
-  }
+
 
   /**
    * updatePlayedCards models a card shoe with 1..N decks.
