@@ -3,27 +3,39 @@
     <app-header></app-header>
   </div>
 
-  <div class="row">
-    <hr>
-    <app-dealer [title]='dealerTitle'></app-dealer>
-    <br>
-    <hr>
-    <app-player [title]='playerTitle'>
-      <div class="col-xs-2">
-        <button [disabled]="requestHitDisabled()"
-                class="btn btn-lg btn-success"
-                style="width: 100%;"
-                (click)="requestHit()">Hit
-        </button>
-      </div>
-      <div class="col-xs-2">
-        <button [disabled]="requestStandDisabled()"
-                class="btn btn-lg btn-danger"
-                style="width: 100%;"
-                (click)="requestStand()">Stand
-        </button>
-      </div>
-    </app-player>
-
+  <div class="row top">
+    <div class="col-xs-2">
+      <p class="ex1">
+      <button class="btn spacer btn-lg btn-primary"
+              style="width: 80%; "
+              (click)="dealCards()">Deal
+      </button>
+      <button [disabled]="requestHitDisabled()"
+              class="btn spacer btn-lg btn-success"
+              style="width: 80%;"
+              (click)="requestHit()">Hit
+      </button>
+      <button [disabled]="requestStandDisabled()"
+              class="btn spacer btn-lg btn-danger"
+              style="width: 80%;"
+              (click)="requestStand()">Stand
+      </button>
+      </p>
+    </div>
+    <div class="col-xs-10">
+      <app-player [title]='playerTitle'></app-player>
+    </div>
   </div>
+  <hr>
+  <div class="row spacer">
+    <div class="col-xs-2">
+    </div>
+    <div class="col-xs-10">
+      <app-dealer [title]='dealerTitle'></app-dealer>
+    </div>
+  </div>
+
+
+</div>
+
 

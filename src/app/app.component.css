@@ -1,0 +1,17 @@
+p.ex1 {
+  margin-top: 55px;
+}
+
+.btn .spacer
+{
+  margin-top: 10px;
+  margin-bottom: 0px !important;
+}
+
+.row .spacer {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 0px !important;
+}
+
+
