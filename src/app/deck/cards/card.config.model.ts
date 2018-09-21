@@ -38,5 +38,5 @@ export class CardConfigModel  {
       [CardConfigModel.GREEN, '../assets/images/Green_back.jpg'],
       [CardConfigModel.YELLOW, '../assets/images/Yellow_back.jpg'],
     ]);
- 
+
 }
