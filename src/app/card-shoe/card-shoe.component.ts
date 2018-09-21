@@ -21,6 +21,7 @@ export class CardShoeComponent implements OnInit {
   currentDeckIndex = 0;
   virtualActiveCards = 0;
   activeDeck: DeckComponent;
+  stats: StatsModel;
   playedCards: Card[] = [];
 
   constructor() {
@@ -39,8 +40,6 @@ export class CardShoeComponent implements OnInit {
     this.activeDeck.deckBackingColor = CardConfigModel.DECK_COLORS[this.currentDeckIndex];
   }
 
-
-
   /**
    * updatePlayedCards models a card shoe with 1..N decks.
    * During game play, all cards are taken from the shoe.
@@ -55,6 +54,7 @@ export class CardShoeComponent implements OnInit {
     this.virtualActiveCards =
         CardShoeComponent.DECKS_TO_USE * DeckComponent.CARDS_IN_DECK;
     this.playedCards.length = 0;
+
     this.createDeck();
   }
 
@@ -92,7 +92,7 @@ export class CardShoeComponent implements OnInit {
   }
 
   /**
-   * cardWithBack optimizes the implementation by not provided a path
+   * cardWithBack optimizes the implementation by not providing a path
    * to the back of the card if the back will never be s
    * During game play, all cards are taken from the shoe.
    * Each time a card is dealt, it is added to the played cards.
@@ -131,8 +131,6 @@ export class CardShoeComponent implements OnInit {
       }
     }
 
-    return new StatsModel(lowValue, neutralValue, highValue,
-      this.virtualActiveCards,
-      this.playedCards.length);
+    return new StatsModel(this.virtualActiveCards, lowValue, neutralValue, highValue);
   }
 }

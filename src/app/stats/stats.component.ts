@@ -17,7 +17,7 @@ export class StatsComponent implements OnInit, AfterContentInit {
   }
 
   ngOnInit() {
-    this.runningStats = new StatsModel(0, 0, 0, 0, 0);
+    this.runningStats = new StatsModel(0, 0, 0, 0);
     this.statsService.counterStatistics
       .subscribe(
         (statsModel: StatsModel) => {
@@ -26,7 +26,6 @@ export class StatsComponent implements OnInit, AfterContentInit {
           this.runningStats.highValue = statsModel.highValue;
           this.runningStats.totalValue =  statsModel.totalValue;
           this.runningStats.availableCards = statsModel.availableCards;
-          this.runningStats.playedCards = statsModel.playedCards;
 
         }
       );
