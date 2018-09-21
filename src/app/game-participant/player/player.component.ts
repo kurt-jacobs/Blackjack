@@ -2,7 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {CardService} from '../../services/card.service';
 import {GameParticipantComponent} from '../game-participant.component';
 import {DisplayableCardComponent} from '../../deck/cards/displayable-card/displayable-card.component';
-
+import {BlackjackConstants} from '../../shared/blackjack.constants';
 
 /**
  * PlayerComponent extends GameParticipantComponent and contains
@@ -42,7 +42,7 @@ export class PlayerComponent extends GameParticipantComponent implements OnInit 
   requestHit() {
     this.cards.push(this.cardService.requestCard());
     const totalScore = this.calculateScore();
-    if (totalScore > this.maxScore) {
+    if (totalScore > BlackjackConstants.maxScore) {
       this.publishBust();
     }
   }
@@ -56,7 +56,6 @@ export class PlayerComponent extends GameParticipantComponent implements OnInit 
     this.requestHitEnabled = false;
     this.requestStandEnabled = false;
     this.cardService.requestStand();
-    this.handClosed = true;
   }
 
   /**
@@ -67,7 +66,6 @@ export class PlayerComponent extends GameParticipantComponent implements OnInit 
     this.requestHitEnabled = false;
     this.requestStandEnabled = false;
     this.cardService.publishBust();
-    this.handClosed = true;
   }
 
 }

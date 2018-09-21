@@ -60,7 +60,6 @@ export class DealerComponent extends GameParticipantComponent implements OnInit 
       this.cards.push(this.cardService.requestCard());
       totalScore = this.calculateScore();
     }
-
   }
 
 }

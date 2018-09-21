@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DisplayableCardComponent} from '../deck/cards/displayable-card/displayable-card.component';
+import {CardUtilities} from '../shared/card.utilities';
+import {BlackjackConstants} from '../shared/blackjack.constants';
 
 
 /**
@@ -13,12 +15,9 @@ import {DisplayableCardComponent} from '../deck/cards/displayable-card/displayab
 })
 
 export class GameParticipantComponent implements OnInit {
-  maxScore = 21;
-  aceValueDelta = 10;     // value of ace upper bound added to the 1.
   @Input() title = '';   // Dealer, Player etc.
   cards: DisplayableCardComponent[] = [];
   _gameStarted = false;
-  handClosed = false;
   playStatus = '';
   requestHitEnabled = true;
   requestStandEnabled = true;
@@ -28,33 +27,14 @@ export class GameParticipantComponent implements OnInit {
 
   ngOnInit() {
 
-
   }
 
   /**
-   * colorCodedBorder determines the color of the outline to put
-   * around a card based on the value of the card and whether or not
-   * it's face up.
+   * delegate to utility class colorCodedBorder to determines the color of the outline to put
+   * around a card
    */
   colorCodedBorder(card: DisplayableCardComponent) {
-    let styling = 'img-responsive';
-
-    if (card) {
-      if (card.faceUp === false) {
-        styling = 'img-responsive border-white';
-      } else {
-        const countValue = card.countValue;
-        if (countValue === -1) {
-          styling = 'img-responsive border-red';
-        } else if (countValue === 1) {
-          styling = 'img-responsive border-green';
-        } else if (countValue === 0) {
-          styling = 'img-responsive border-blue';
-        }
-      }
-    }
-
-    return styling;
+    return CardUtilities.colorCodedBorder(card);
   }
 
   /**
@@ -64,7 +44,7 @@ export class GameParticipantComponent implements OnInit {
    */
   updatePlayStatus(cardTotal: number) {
     this.playStatus = cardTotal.toString();
-    if (cardTotal > this.maxScore) {
+    if (cardTotal > BlackjackConstants.maxScore) {
       this.playStatus = 'Busted [' + cardTotal.toString() + ']';
     }
   }
@@ -74,7 +54,7 @@ export class GameParticipantComponent implements OnInit {
    * player has busted.
    */
   updateButtonStatesBasedOnTotal(cardTotal: number) {
-    if (cardTotal > this.maxScore) {
+    if (cardTotal > BlackjackConstants.maxScore) {
       this.requestHitEnabled = false;
       this.requestStandEnabled = false;
     }
@@ -86,29 +66,7 @@ export class GameParticipantComponent implements OnInit {
    * closest to 21 in the event that the participants have 1..N Aces.
    */
   calculateScore() {
-    let totalCardValue = 0;
-    let acesFound = 0;
-
-    if ((this.cards) && (this.cards.length > 0)) {
-      const cardsToCalc = this.cards.slice().sort((card1, card2) => {
-        return card2.value - card1.value;
-      });
-
-      for (let i = 0; i < cardsToCalc.length; i++) {
-        if (cardsToCalc[i].faceUp) {
-          if (cardsToCalc[i].value === 1) {
-            acesFound = acesFound + 1;
-          }
-          totalCardValue += cardsToCalc[i].value;
-        }
-      }
-      // Convert any Aces to 11 if under 22 total
-      for (let i = 0; i < acesFound && totalCardValue <= this.maxScore; i++) {
-        if (totalCardValue + this.aceValueDelta <= this.maxScore) {
-          totalCardValue = totalCardValue + this.aceValueDelta;
-        }
-      }
-    }
+    const totalCardValue = CardUtilities.calculateScore(this.cards);
     this.updatePlayStatus(totalCardValue);
     this.updateButtonStatesBasedOnTotal(totalCardValue);
     return totalCardValue;
