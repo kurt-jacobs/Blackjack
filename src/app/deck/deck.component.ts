@@ -48,9 +48,7 @@ export class DeckComponent implements OnInit {
     this._deckColor = deckColor;
   }
   get backImagePath(): string {
-    const foo = this.cardConfigModel.getBacking(this._deckColor);
-    console.log('foo= ' + foo);
-    return foo;
+    return CardConfigModel.deckBackings.get(this._deckColor);
   }
 
   get cards(): Card[] {

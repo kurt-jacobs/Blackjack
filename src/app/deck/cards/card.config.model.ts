@@ -1,4 +1,9 @@
 
+/**
+ * CardConfigModel defines values used in the construction of a card.
+ *
+ */
+
 export class CardConfigModel  {
 
   static BLUE = 'Blue';
@@ -6,7 +11,6 @@ export class CardConfigModel  {
   static GRAY = 'Gray';
   static GREEN = 'Green';
   static YELLOW = 'Yellow';
-
 
   static cardSuits = ['S', 'H', 'D', 'C'];
   static cardNames: { name: string, value: number, countValue: number }[] = [
@@ -25,23 +29,14 @@ export class CardConfigModel  {
     { 'name': 'A',  'value': 1 , 'countValue': -1 }
   ];
 
-  deckBackings = [];
 
-
+  static deckBackings: Map<string, string> =
+    new Map([
+      [CardConfigModel.GRAY, '../assets/images/Gray_back.jpg'],
+      [CardConfigModel.BLUE, '../assets/images/Blue_back.jpg'],
+      [CardConfigModel.RED, '../assets/images/Red_back.jpg'],
+      [CardConfigModel.GREEN, '../assets/images/Green_back.jpg'],
+      [CardConfigModel.YELLOW, '../assets/images/Yellow_back.jpg'],
+    ]);
  
-
-  constructor() {
-    this.deckBackings[CardConfigModel.GRAY] = '../assets/images/Gray_back.jpg';
-    this.deckBackings[CardConfigModel.BLUE] = '../assets/images/Blue_back.jpg';
-    this.deckBackings[CardConfigModel.RED] = '../assets/images/Red_back.jpg';
-    this.deckBackings[CardConfigModel.GREEN] = '../assets/images/Green_back.jpg';
-    this.deckBackings[CardConfigModel.YELLOW] = '../assets/images/Yellow_back.jpg';
-  }
-
-
-  getBacking(key: string) {
-    return this.deckBackings[key];
-  }
-
-
 }
