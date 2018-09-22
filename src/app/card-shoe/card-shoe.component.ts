@@ -18,14 +18,26 @@ import {Card} from '../deck/cards/card';
 
 export class CardShoeComponent implements OnInit {
   static DECKS_TO_USE = CardConfigModel.DECK_COLORS.length;
-  currentDeckIndex = 0;
-  virtualActiveCards = 0;
-  activeDeck: DeckComponent;
-  stats: StatsModel;
-  playedCards: Card[] = [];
+  private currentDeckIndex = 0;
+  private virtualActiveCards = 0;
+  private lowValue = 0;
+  private neutralValue = 0;
+  private highValue = 0;
+  private activeDeck: DeckComponent;
+  private stats: StatsModel;
 
   constructor() {
     this.initialize();
+  }
+
+  static createDisplayCard(card: Card) {
+    const newCard = new DisplayableCardComponent();
+    const faceImagePath = '../assets/images/' + card.name + '.jpg';
+    newCard.name = card.name;
+    newCard.value = card.value;
+    newCard.countValue = card.countValue;
+    newCard.faceImagePath = faceImagePath;
+    return newCard;
   }
 
   ngOnInit() {
@@ -40,20 +52,13 @@ export class CardShoeComponent implements OnInit {
     this.activeDeck.deckBackingColor = CardConfigModel.DECK_COLORS[this.currentDeckIndex];
   }
 
-  /**
-   * updatePlayedCards models a card shoe with 1..N decks.
-   * During game play, all cards are taken from the shoe.
-   * Each time a card is dealt, it is added to the played cards.
-   */
-  updatePlayedCards(card: Card) {
-    this.playedCards.push(card);
-  }
-
   initialize() {
+    this.lowValue = 0;
+    this.neutralValue = 0;
+    this.highValue = 0;
     this.currentDeckIndex = 0;
     this.virtualActiveCards =
         CardShoeComponent.DECKS_TO_USE * DeckComponent.CARDS_IN_DECK;
-    this.playedCards.length = 0;
     this.stats = new StatsModel(this.virtualActiveCards,0,0,0);
     this.createDeck();
   }
@@ -81,16 +86,11 @@ export class CardShoeComponent implements OnInit {
     this.virtualActiveCards = this.virtualActiveCards - 1;
     // create a displayable card from a base card that doesn't have image
     // path information.
-    const newCard = new DisplayableCardComponent();
-    const faceImagePath = '../assets/images/' + card.name + '.jpg';
-    newCard.name = card.name;
-    newCard.value = card.value;
-    newCard.countValue = card.countValue;
-    newCard.faceImagePath = faceImagePath;
-    this.updatePlayedCards(newCard);
-    return newCard;
+
+    return CardShoeComponent.createDisplayCard(card);;
   }
 
+  
   /**
    * cardWithBack optimizes the implementation by not providing a path
    * to the back of the card if the back will never be s
@@ -104,33 +104,30 @@ export class CardShoeComponent implements OnInit {
   }
 
 
+  updateStats(cards: DisplayableCardComponent[]) {
+    if ((cards) && (cards.length > 0)) {
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        if (card.faceUp) {
+          const countValue = card.countValue;
+          if (countValue === -1) {
+            this.highValue++;
+          } else if (countValue === 0) {
+            this.neutralValue++;
+          } else if (countValue === 1) {
+            this.lowValue++;
+          }
+        }
+      }
+    }
+  }
+
   /**
    * getCounterStats calculates the values for counting cards.
    * Face down cards are not counted as this tool simulates what
    * a player would be able to see to determine counts
    */
   get counterStats(): StatsModel {
-    let lowValue = 0;
-    let neutralValue = 0;
-    let highValue = 0;
-
-    if ((this.playedCards) && (this.playedCards.length > 0)) {
-      for (let i = 0; i < this.playedCards.length; i++) {
-        const card = this.playedCards[i];
-
-        if (card.faceUp) {
-          const countValue = this.playedCards[i].countValue;
-          if (countValue === -1) {
-            highValue++;
-          } else if (countValue === 0) {
-            neutralValue++;
-          } else if (countValue === 1) {
-            lowValue++;
-          }
-        }
-      }
-    }
-
-    return new StatsModel(this.virtualActiveCards, lowValue, neutralValue, highValue);
+    return new StatsModel(this.virtualActiveCards, this.lowValue, this.neutralValue, this.highValue);
   }
 }

@@ -8,11 +8,14 @@ import {DisplayableCardComponent} from '../deck/cards/displayable-card/displayab
 @Injectable({
   providedIn: 'root',
 })
+
 export class CardService {
-  shoe: CardShoeComponent;
+  private shoe: CardShoeComponent;
+  private dealerFirstCard: DisplayableCardComponent;
   playerDeal = new EventEmitter<DisplayableCardComponent[]>();
   dealerDeal = new EventEmitter<DisplayableCardComponent[]>();
   dealerStatus = new EventEmitter<PlayStatus>();
+
 
   constructor(private statsService: StatsService) {
     this.shoe = new CardShoeComponent();
@@ -26,10 +29,11 @@ export class CardService {
   // Deal cards to the dealer. First card is face down.
   dealDealerCards() {
     const cards: DisplayableCardComponent[] = [];
-    const firstCard = this.shoe.cardWithBack;
-    firstCard.faceUp = false;
-    cards.push(firstCard);
+    this.dealerFirstCard = this.shoe.cardWithBack;
+    this.dealerFirstCard.faceUp = false;
+    cards.push( this.dealerFirstCard);
     cards.push(this.shoe.card);
+    this.shoe.updateStats(cards);
     this.dealerDeal.emit(cards);
   }
 
@@ -38,6 +42,8 @@ export class CardService {
     const cards: DisplayableCardComponent[] = [];
     cards.push(this.shoe.card);
     cards.push(this.shoe.card);
+    this.shoe.updateStats(cards);
+
     this.playerDeal.emit(cards);
   }
 
@@ -55,6 +61,7 @@ export class CardService {
 
   requestCard() {
     const card = this.shoe.card;
+    this.updateStatsWithCard(card);
     this.publishStats();
     if (card != null) {
       return card;
@@ -62,13 +69,30 @@ export class CardService {
   }
 
   requestStand() {
+    // const cards: DisplayableCardComponent[] = [];
+    // cards.push(this.dealerFirstCard);
+    // this.shoe.updateStats(cards);
+
+    this.dealerFirstCard.faceUp = true;
+    this.updateStatsWithCard(this.dealerFirstCard);
     this.dealerStatus.emit(PlayStatus.player_stands);
     this.publishStats();
   }
 
   publishBust() {
+    this.dealerFirstCard.faceUp = true;
+    this.updateStatsWithCard(this.dealerFirstCard);
     this.dealerStatus.emit(PlayStatus.player_bust);
     this.publishStats();
   }
+
+
+ updateStatsWithCard(card: DisplayableCardComponent) {
+   const cards: DisplayableCardComponent[] = [];
+   cards.push(card);
+   this.shoe.updateStats(cards);
+ }
+
+
 
 }

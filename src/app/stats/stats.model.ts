@@ -35,7 +35,7 @@ export class StatsModel {
   get availableCards(): number {
     return this._availableCards;
   }
-  
+
   set highValue(value: number) {
     this._highValue = value;
   }

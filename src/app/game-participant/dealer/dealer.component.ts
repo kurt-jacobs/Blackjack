@@ -20,7 +20,6 @@ export class DealerComponent extends GameParticipantComponent implements OnInit 
 
   handlePlayerStands() {
     if ((this.cards) && (this.cards.length > 0)) {
-      this.cards[0].faceUp = true;
       const totalScore = this.calculateScore();
       this.requestCardIfUnderThreshold(totalScore);
     }
@@ -28,7 +27,6 @@ export class DealerComponent extends GameParticipantComponent implements OnInit 
 
   handlePlayerBusts() {
     if ((this.cards) && (this.cards.length > 0)) {
-      this.cards[0].faceUp = true;
       this.calculateScore();
     }
   }
