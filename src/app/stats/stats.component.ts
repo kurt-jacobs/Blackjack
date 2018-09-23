@@ -1,7 +1,6 @@
-import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {StatsService} from '../services/stats.service';
 import {StatsModel} from './stats.model';
-import {DeckComponent} from '../deck/deck.component';
 import {CardService} from '../services/card.service';
 import {BlackjackConstants} from '../shared/blackjack.constants';
 
@@ -40,12 +39,14 @@ export class StatsComponent implements OnInit, AfterContentInit {
     return this.runningStats.availableCards / BlackjackConstants.CARDS_IN_DECK;
   }
 
+  get adjustDecksRemaining() {
+    const decksLeft = this.decksRemaining;
+    return Math.round((decksLeft + 0.12) / 0.25) * 0.25;
+  }
+
   get trueCount() {
-    let decksLeft = this.runningStats.availableCards / BlackjackConstants.CARDS_IN_DECK;
-    if (decksLeft < 0.1) {
-      decksLeft = 0.1;
-    }
-    return this.runningStats.totalValue / decksLeft;
+    const decksLeft = (this.adjustDecksRemaining > 0) ? this.adjustDecksRemaining : 0.1;
+    return Math.round(this.runningStats.totalValue / decksLeft);
   }
 
 }

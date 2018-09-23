@@ -80,6 +80,11 @@ export class CardShoeComponent implements OnInit {
     this.initializeNewDeck();
   }
 
+  /**
+   *  A deck is created one time.  Each time a "new" deck is initialized, we
+   *  simply shuffle the current deck and increment an array holding the back image
+   *  paths for the cards to make it looks like it's a new deck.
+   */
   initializeNewDeck() {
     DeckComponent.shuffle(this.activeDeck.cards, 52);
     this.currentCardIndex = 0;
