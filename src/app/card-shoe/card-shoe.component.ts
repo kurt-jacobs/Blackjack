@@ -9,7 +9,8 @@ import {BlackjackConstants} from '../shared/blackjack.constants';
 /**
  * CardShoeComponent models a card shoe with 1..N decks.
  * During game play, all cards are taken from the shoe.
- * Each time a card is dealt, it is added to the played cards.
+ * Each time a card is dealt, a value from the virtual card count
+ * is decremented.
  */
 @Component({
   selector: 'app-card-shoe',
@@ -37,6 +38,13 @@ export class CardShoeComponent implements OnInit {
     return '../assets/images/' + card.name + '.jpg';
   }
 
+  /**
+   * createDisplayableCard will take a base card (only having values) and creates
+   * a card that can be displayed to the user. (has face and back image)
+   * @param card - base card to be convert to a card with displayable front and back image
+   * @param faceImagePath - path to image of front of card
+   * @param backImagePath - path to card back.
+   */
   static createDisplayableCard(card: Card, faceImagePath: string, backImagePath: string) {
     const newCard = new DisplayableCardComponent();
     newCard.name = card.name;
@@ -64,6 +72,8 @@ export class CardShoeComponent implements OnInit {
     this.neutralValue = 0;
     this.highValue = 0;
     this.currentDeckIndex = 0;
+    // make it look like shoe has N decks when it in reality we only
+    // have one active deck.
     this.virtualActiveCards =
       CardShoeComponent.DECKS_TO_USE * BlackjackConstants.CARDS_IN_DECK;
     this.stats = new StatsModel(this.virtualActiveCards, 0, 0, 0);
@@ -72,15 +82,16 @@ export class CardShoeComponent implements OnInit {
 
   initializeNewDeck() {
     DeckComponent.shuffle(this.activeDeck.cards, 52);
-    this.currentCardIndex = BlackjackConstants.CARDS_IN_DECK - 1;
+    this.currentCardIndex = 0;
     this.activeDeck.deckBackingColor = CardConfigModel.DECK_COLORS[this.currentDeckIndex];
+    // Increment to next backing deck color for next deck initialize
     this.currentDeckIndex = (this.currentDeckIndex + 1) % CardShoeComponent.DECKS_TO_USE;
   }
 
   // Decrement values for the virtual cards in shoe and index into current active deck
   withdrawCardFromShoe() {
     const card = this.activeDeck.cards[this.currentCardIndex];
-    this.currentCardIndex = this.currentCardIndex - 1;
+    this.currentCardIndex = this.currentCardIndex + 1;
     // virtualActiveCards holds the number of all cards in the shoe.
     // which include a real active deck and N "virtual decks"
     this.virtualActiveCards = this.virtualActiveCards - 1;
@@ -99,7 +110,7 @@ export class CardShoeComponent implements OnInit {
     // it look like a new one.
     if (this.virtualActiveCards === 0) {
       this.initialize();
-    } else if (this.currentCardIndex === -1) {
+    } else if (this.currentCardIndex === BlackjackConstants.CARDS_IN_DECK) {
       // exhausted current deck. advance index of deck colors to next color.
       this.initializeNewDeck();
     }
