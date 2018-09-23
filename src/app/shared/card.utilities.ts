@@ -1,7 +1,6 @@
 import {DisplayableCardComponent} from '../deck/cards/displayable-card/displayable-card.component';
 import {BlackjackConstants} from './blackjack.constants';
 import {Card} from '../deck/cards/card';
-import {StatsModel} from '../stats/stats.model';
 
 export class CardUtilities {
   static aceValueDelta = 10;     // value of ace upper bound added to the 1.
@@ -64,23 +63,6 @@ export class CardUtilities {
     return totalCardValue;
   }
 
-  static printStats(stats: StatsModel, low: number , neutral: number, high: number) {
-
-    if (low !== stats.lowValue) {
-      console.log('LOW VALUE NOT EQUAL ' +  low + ':' + stats.lowValue);
-    }
-    if (neutral !== stats.neutralValue) {
-      console.log('NEUTRAL VALUE NOT EQUAL ' +  neutral + ':' + stats.neutralValue);
-    }
-    if (high !== stats.highValue) {
-      console.log('HIGH VALUE NOT EQUAL ' +  high + ':' + stats.highValue);
-    }
-
-    // console.log('stat model=' , statModelDebug);
-    console.log(low + '   ' + neutral + '   ' + high);
-
-
-  }
 
   // Used for debug
   static printDebug(cardsToPrint: Card[]) {

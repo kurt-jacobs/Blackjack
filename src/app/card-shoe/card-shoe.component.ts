@@ -21,7 +21,7 @@ export class CardShoeComponent implements OnInit {
   static DECKS_TO_USE = CardConfigModel.DECK_COLORS.length;
   private currentDeckIndex = 0;    // index into decks
   private currentCardIndex = 0;    // index into active deck
-  private virtualActiveCards = 0;
+  private virtualActiveCards = 0;  // count of cards in shoe
   private lowValue = 0;
   private neutralValue = 0;
   private highValue = 0;
@@ -33,13 +33,17 @@ export class CardShoeComponent implements OnInit {
     this.initialize();
   }
 
-  static createDisplayableCard(card: Card) {
+  static getFaceImagePath(card: Card) {
+    return '../assets/images/' + card.name + '.jpg';
+  }
+
+  static createDisplayableCard(card: Card, faceImagePath: string, backImagePath: string) {
     const newCard = new DisplayableCardComponent();
-    const faceImagePath = '../assets/images/' + card.name + '.jpg';
     newCard.name = card.name;
     newCard.value = card.value;
     newCard.countValue = card.countValue;
     newCard.faceImagePath = faceImagePath;
+    newCard.backImagePath = backImagePath;
     return newCard;
   }
 
@@ -100,21 +104,11 @@ export class CardShoeComponent implements OnInit {
       this.initializeNewDeck();
     }
 
+    const card = this.withdrawCardFromShoe();
     // create a displayable card from a base card that doesn't have image
     // path information.
-    return CardShoeComponent.createDisplayableCard(this.withdrawCardFromShoe());
-  }
-
-  /**
-   * cardWithBack optimizes the implementation by not providing a path
-   * to the back of the card if the back will never be s
-   * During game play, all cards are taken from the shoe.
-   * Each time a card is dealt, it is added to the played cards.
-   */
-  get cardWithBack() {
-    const cardWithBack = this.card;
-    cardWithBack.backImagePath = this.activeDeck.backImagePath;
-    return cardWithBack;
+    return CardShoeComponent.createDisplayableCard(
+       card , CardShoeComponent.getFaceImagePath(card), this.activeDeck.backImagePath);
   }
 
   /**
