@@ -3,6 +3,7 @@ import {StatsService} from '../services/stats.service';
 import {StatsModel} from './stats.model';
 import {DeckComponent} from '../deck/deck.component';
 import {CardService} from '../services/card.service';
+import {BlackjackConstants} from '../shared/blackjack.constants';
 
 @Component({
   selector: 'app-stats',
@@ -36,11 +37,14 @@ export class StatsComponent implements OnInit, AfterContentInit {
   }
 
   get decksRemaining() {
-    return this.runningStats.availableCards / DeckComponent.CARDS_IN_DECK;
+    return this.runningStats.availableCards / BlackjackConstants.CARDS_IN_DECK;
   }
 
   get trueCount() {
-    const decksLeft = this.runningStats.availableCards / DeckComponent.CARDS_IN_DECK;
+    let decksLeft = this.runningStats.availableCards / BlackjackConstants.CARDS_IN_DECK;
+    if (decksLeft < 0.1) {
+      decksLeft = 0.1;
+    }
     return this.runningStats.totalValue / decksLeft;
   }
 

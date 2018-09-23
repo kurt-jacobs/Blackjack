@@ -9,7 +9,6 @@ import {Card} from './cards/card';
 })
 
 export class DeckComponent implements OnInit {
-  static CARDS_IN_DECK = 52;
   private deckCards: Card[] = [];
   private _deckColor: string;
 
@@ -40,8 +39,6 @@ export class DeckComponent implements OnInit {
         this.deckCards.push(newCard);
       }
     }
-
-    DeckComponent.shuffle(this.deckCards , 52);
   }
 
   set deckBackingColor(deckColor: string) {
