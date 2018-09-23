@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PlayerComponent} from './game-participant/player/player.component';
 import {CardService} from './services/card.service';
+import {GameParticipantComponent} from './game-participant/game-participant.component';
+import {DealerComponent} from './game-participant/dealer/dealer.component';
 
 
 @Component({
@@ -9,6 +11,7 @@ import {CardService} from './services/card.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  @ViewChild(DealerComponent) dealer: DealerComponent;
   @ViewChild(PlayerComponent) player: PlayerComponent;
   dealerTitle = 'Dealer';
   playerTitle = 'Player';
@@ -20,6 +23,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  toggleHighlight() {
+    this.player.toggleHighlight();
+    this.dealer.toggleHighlight();
   }
 
   /**

@@ -9,20 +9,24 @@ export class CardUtilities {
    * around a card based on the value of the card and whether or not
    * it's face up.
    */
-  static colorCodedBorder(card: DisplayableCardComponent) {
+  static colorCodedBorder(card: DisplayableCardComponent, highlight: boolean) {
     let styling = 'img-responsive';
 
     if (card) {
-      if (card.faceUp === false) {
+      if (!highlight) {
         styling = styling + ' border-white';
       } else {
-        const countValue = card.countValue;
-        if (countValue === -1) {
-          styling = styling + ' border-red';
-        } else if (countValue === 1) {
-          styling = styling + ' border-green';
-        } else if (countValue === 0) {
-          styling = styling + ' border-blue';
+        if (card.faceUp === false) {
+          styling = styling + ' border-white';
+        } else {
+          const countValue = card.countValue;
+          if (countValue === -1) {
+            styling = styling + ' border-red';
+          } else if (countValue === 1) {
+            styling = styling + ' border-green';
+          } else if (countValue === 0) {
+            styling = styling + ' border-blue';
+          }
         }
       }
     }

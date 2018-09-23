@@ -18,9 +18,10 @@ export class GameParticipantComponent implements OnInit {
   @Input() title = '';   // Dealer, Player etc.
   cards: DisplayableCardComponent[] = [];
   _gameStarted = false;
-  playStatus = '';
+  private playStatus = '';
   requestHitEnabled = true;
   requestStandEnabled = true;
+  highlight = true;
 
   constructor() {
   }
@@ -29,12 +30,16 @@ export class GameParticipantComponent implements OnInit {
 
   }
 
+  toggleHighlight() {
+    this.highlight = !this.highlight;
+    console.log('highlight=' + this.highlight);
+  }
   /**
    * delegate to utility class colorCodedBorder to determines the color of the outline to put
    * around a card
    */
   colorCodedBorder(card: DisplayableCardComponent) {
-    return CardUtilities.colorCodedBorder(card);
+    return CardUtilities.colorCodedBorder(card, this.highlight);
   }
 
   /**

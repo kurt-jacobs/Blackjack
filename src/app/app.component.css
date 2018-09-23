@@ -5,7 +5,8 @@ p.ex1 {
 .btn .spacer
 {
   margin-top: 10px;
-  margin-bottom: 0px !important;
+  margin-left: 0px;
+  margin-bottom: 0px;
 }
 
 .row .spacer {
