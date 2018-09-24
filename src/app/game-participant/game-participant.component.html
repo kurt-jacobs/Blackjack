@@ -1,11 +1,11 @@
 <div class="container" *ngIf="gameStarted">
   <div class="row">
     <div class="col-xs-12">
-      <div *ngIf="assist; else templateName">
+      <div *ngIf="assist; else noAssist">
         <h3>{{ title }} ({{ playStatus }}) Count {{ countForHand }}</h3>
       </div>
 
-      <ng-template #templateName>
+      <ng-template #noAssist>
         <h3> {{ title }} </h3>
       </ng-template>
     </div>

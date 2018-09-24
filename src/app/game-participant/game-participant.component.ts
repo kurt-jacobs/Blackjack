@@ -49,11 +49,11 @@ export class GameParticipantComponent implements OnInit {
           styling = styling + ' border-white';
         } else {
           const countValue = card.countValue;
-          if (countValue === -1) {
+          if (countValue === BlackjackConstants.HIGH_CARD_VALUE) {
             styling = styling + ' border-red';
-          } else if (countValue === 1) {
+          } else if (countValue === BlackjackConstants.LOW_CARD_VALUE) {
             styling = styling + ' border-green';
-          } else if (countValue === 0) {
+          } else if (countValue === BlackjackConstants.NEUTRAL_CARD_VALUE) {
             styling = styling + ' border-blue';
           }
         }
@@ -68,9 +68,10 @@ export class GameParticipantComponent implements OnInit {
    * card or when a card that was face down is now face up.
    */
   updatePlayStatus(cardTotal: number) {
-    this.playStatus = cardTotal.toString();
     if (cardTotal > BlackjackConstants.maxScore) {
       this.playStatus = 'Busted [' + cardTotal.toString() + ']';
+    } else {
+      this.playStatus = cardTotal.toString();
     }
   }
 
