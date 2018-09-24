@@ -37,6 +37,23 @@ export class CardUtilities {
     return totalCardValue;
   }
 
+  /**
+   *
+   * @param cards
+   */
+  static calculateCount(cards: DisplayableCardComponent[]) {
+    let totalCount = 0;
+    if ((cards) && (cards.length > 0)) {
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        if (card.faceUp) {
+          totalCount = totalCount + card.countValue;
+        }
+      }
+    }
+    return totalCount;
+  }
+
 
   // Used for debug
   static printDebug(cardsToPrint: Card[]) {

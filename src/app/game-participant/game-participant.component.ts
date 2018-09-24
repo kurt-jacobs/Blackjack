@@ -17,10 +17,11 @@ import {BlackjackConstants} from '../shared/blackjack.constants';
 export class GameParticipantComponent implements OnInit {
   @Input() title = '';   // Dealer, Player etc.
   cards: DisplayableCardComponent[] = [];
-  _gameStarted = false;
-  private playStatus = '';
+  protected _gameStarted = false;
+  playStatus = '';
   requestHitEnabled = true;
   requestStandEnabled = true;
+  countForHand: number;
   assist = true;
 
   constructor() {
@@ -73,6 +74,9 @@ export class GameParticipantComponent implements OnInit {
     }
   }
 
+  updateCountTotal() {
+    this.countForHand = CardUtilities.calculateCount(this.cards);
+  }
   /**
    * updateButtonStatesBasedOnTotal  to disable the Hit button if the
    * player has busted.

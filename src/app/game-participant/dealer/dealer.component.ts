@@ -22,12 +22,14 @@ export class DealerComponent extends GameParticipantComponent implements OnInit 
     if ((this.cards) && (this.cards.length > 0)) {
       const totalScore = this.calculateScore();
       this.requestCardIfUnderThreshold(totalScore);
+      this.updateCountTotal();
     }
   }
 
   handlePlayerBusts() {
     if ((this.cards) && (this.cards.length > 0)) {
       this.calculateScore();
+      this.updateCountTotal();
     }
   }
 
@@ -36,7 +38,8 @@ export class DealerComponent extends GameParticipantComponent implements OnInit 
       .subscribe(
         (cards: DisplayableCardComponent[]) => {
           this.cards = cards;
-          const totalScore = this.calculateScore();
+          this.calculateScore();
+          this.updateCountTotal();
           this._gameStarted = true;
         }
       );
@@ -57,6 +60,7 @@ export class DealerComponent extends GameParticipantComponent implements OnInit 
     while (totalScore < this.maxValueRequiringHit) {
       this.cards.push(this.cardService.requestCard());
       totalScore = this.calculateScore();
+      this.updateCountTotal();
     }
   }
 
