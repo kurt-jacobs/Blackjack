@@ -4,36 +4,6 @@ import {Card} from '../deck/cards/card';
 
 export class CardUtilities {
   static aceValueDelta = 10;     // value of ace upper bound added to the 1.
-  /**
-   * colorCodedBorder determines the color of the outline to put
-   * around a card based on the value of the card and whether or not
-   * it's face up.
-   */
-  static colorCodedBorder(card: DisplayableCardComponent, highlight: boolean) {
-    let styling = 'img-responsive';
-
-    if (card) {
-      if (!highlight) {
-        styling = styling + ' border-white';
-      } else {
-        if (card.faceUp === false) {
-          styling = styling + ' border-white';
-        } else {
-          const countValue = card.countValue;
-          if (countValue === -1) {
-            styling = styling + ' border-red';
-          } else if (countValue === 1) {
-            styling = styling + ' border-green';
-          } else if (countValue === 0) {
-            styling = styling + ' border-blue';
-          }
-        }
-      }
-    }
-
-    return styling;
-  }
-
 
   /**
    * calculateScore calculates the score and show the score that is

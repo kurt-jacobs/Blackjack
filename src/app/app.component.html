@@ -3,18 +3,18 @@
     <app-header></app-header>
   </div>
 
-  <div class="row">
-    <button (click)="toggleHighlight()" type="button"
-            class="btn spacer btn-light"
-            data-toggle="button"
-            aria-pressed="false" autocomplete="off">
-      Toggle Highlight
-    </button>
-  </div>
 
   <div class="row top">
     <div class="col-xs-2">
       <p class="ex1">
+        <button (click)="toggleHighlight()" type="button"
+                class="btn spacer btn-lg btn-default"
+                data-toggle="button"
+                style="width: 80%;"
+                aria-pressed="false" autocomplete="off">
+          Assist
+        </button>
+
       <button class="btn spacer btn-lg btn-primary"
               style="width: 80%; "
               (click)="dealCards()">Deal

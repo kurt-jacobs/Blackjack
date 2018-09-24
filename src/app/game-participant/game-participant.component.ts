@@ -21,7 +21,7 @@ export class GameParticipantComponent implements OnInit {
   private playStatus = '';
   requestHitEnabled = true;
   requestStandEnabled = true;
-  highlight = true;
+  assist = true;
 
   constructor() {
   }
@@ -31,15 +31,34 @@ export class GameParticipantComponent implements OnInit {
   }
 
   toggleHighlight() {
-    this.highlight = !this.highlight;
-    console.log('highlight=' + this.highlight);
+    this.assist = !this.assist;
   }
   /**
    * delegate to utility class colorCodedBorder to determines the color of the outline to put
    * around a card
    */
   colorCodedBorder(card: DisplayableCardComponent) {
-    return CardUtilities.colorCodedBorder(card, this.highlight);
+    let styling = 'img-responsive';
+
+    if (card) {
+      if (!this.assist) {
+        styling = styling + ' border-white';
+      } else {
+        if (card.faceUp === false) {
+          styling = styling + ' border-white';
+        } else {
+          const countValue = card.countValue;
+          if (countValue === -1) {
+            styling = styling + ' border-red';
+          } else if (countValue === 1) {
+            styling = styling + ' border-green';
+          } else if (countValue === 0) {
+            styling = styling + ' border-blue';
+          }
+        }
+      }
+    }
+    return styling;
   }
 
   /**
