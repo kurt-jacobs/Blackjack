@@ -1,6 +1,6 @@
 <div class="container" *ngIf="gameStarted">
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-xs-12">
       <div *ngIf="assist; else templateName">
         <h3>{{ title }} ({{ playStatus }}) Count {{ countForHand }}</h3>
       </div>
@@ -19,7 +19,7 @@
       <img [src]="card.getCardImage()"
            alt="{{ card.name }}"
            [ngClass]="colorCodedBorder(card)"
-           style="max-height: 180px;">
+           style="max-height: 180px; min-width: 100px;">
     </div>
   </div>
 </div>

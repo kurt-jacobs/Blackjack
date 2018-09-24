@@ -1,3 +1,10 @@
+div {
+  /* This is the default, you don't need to
+     explicitly declare it unless overriding
+     another declaration */
+  white-space: nowrap;
+}
+
 .box {
   color: #fff;
   background: #f5ffbf;
@@ -7,7 +14,8 @@
 
 .custom {
   font-family: Georgia;
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .custom.blue{
