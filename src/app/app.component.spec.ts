@@ -10,6 +10,7 @@ import {DisplayableCardComponent} from './deck/cards/displayable-card/displayabl
 import {CardShoeComponent} from './card-shoe/card-shoe.component';
 import {DeckComponent} from './deck/deck.component';
 import {GameParticipantComponent} from './game-participant/game-participant.component';
+import {By} from '@angular/platform-browser';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -42,6 +43,20 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.playerTitle).toEqual('Player');
+  }));
+
+  it('dealer should be defined', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const dealerChild: DealerComponent = fixture.componentInstance.dealer;
+    expect(dealerChild).toBeDefined();
+  }));
+
+  it('player should be defined', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const playerChild: PlayerComponent = fixture.componentInstance.player;
+    expect(playerChild).toBeDefined();
   }));
 
 });
