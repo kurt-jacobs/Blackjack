@@ -27,7 +27,7 @@ export class PlayerComponent extends GameParticipantComponent implements OnInit 
       .subscribe(
         (cards: DisplayableCardComponent[]) => {
           this.cards = cards;
-          this._gameStarted = true;
+          this.gameStarted = true;
           this.calculateScore();
           this.updateCountTotal();
           this.requestHitEnabled = true;

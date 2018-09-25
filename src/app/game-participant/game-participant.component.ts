@@ -15,31 +15,76 @@ import {BlackjackConstants} from '../shared/blackjack.constants';
 })
 
 export class GameParticipantComponent implements OnInit {
+
   static borderMap = new Map([
-    [ BlackjackConstants.LOW_CARD_VALUE, 'border-green' ],
-    [ BlackjackConstants.NEUTRAL_CARD_VALUE , 'border-blue' ],
-    [ BlackjackConstants.HIGH_CARD_VALUE , 'border-red' ]
+    [BlackjackConstants.LOW_CARD_VALUE, 'border-green'],
+    [BlackjackConstants.NEUTRAL_CARD_VALUE, 'border-blue'],
+    [BlackjackConstants.HIGH_CARD_VALUE, 'border-red']
   ]);
 
+  private _requestHitEnabled = true;
+  private _requestStandEnabled = true;
+  private _gameStarted = false;
+  private assist = true;
+  private _countForHand: number;
+  private _playStatus = '';
+  private _cards: DisplayableCardComponent[] = [];
   @Input() title = '';   // Dealer, Player etc.
-  cards: DisplayableCardComponent[] = [];
-  protected _gameStarted = false;
-  playStatus = '';
-  requestHitEnabled = true;
-  requestStandEnabled = true;
-  countForHand: number;
-  assist = true;
 
   constructor() {
+  }
+
+  get cards(): DisplayableCardComponent[] {
+    return this._cards;
+  }
+
+  set cards(value: DisplayableCardComponent[]) {
+    this._cards = value;
+  }
+
+  get gameStarted() {
+    return this._gameStarted;
+  }
+
+  set playStatus(value: string) {
+    this._playStatus = value;
+  }
+  get playStatus(): string {
+    return this._playStatus;
+  }
+
+  set gameStarted(gameStarted: boolean) {
+    this._gameStarted = gameStarted;
+  }
+
+  get countForHand(): number {
+    return this._countForHand;
+  }
+
+  get requestHitEnabled() {
+    return this._requestHitEnabled;
+  }
+
+  set requestHitEnabled(requestEnable: boolean) {
+    this._requestHitEnabled = requestEnable;
+  }
+
+  get requestStandEnabled() {
+    return this._requestStandEnabled;
+  }
+
+  set requestStandEnabled(requestEnable: boolean) {
+    this._requestStandEnabled = requestEnable;
   }
 
   ngOnInit() {
 
   }
 
-  toggleHighlight() {
+  toggleAssist() {
     this.assist = !this.assist;
   }
+
   /**
    * delegate to utility class colorCodedBorder to determines the color of the outline to put
    * around a card
@@ -51,7 +96,8 @@ export class GameParticipantComponent implements OnInit {
       if (!this.assist || (card.faceUp === false)) {
         styling = styling + ' border-white';
       } else {
-        styling = styling + ' ' + GameParticipantComponent.borderMap.get(card.countValue);;
+        styling = styling + ' ' + GameParticipantComponent.borderMap.get(card.countValue);
+
       }
     }
     return styling;
@@ -64,22 +110,23 @@ export class GameParticipantComponent implements OnInit {
    */
   updatePlayStatus(cardTotal: number) {
     if (cardTotal > BlackjackConstants.maxScore) {
-      this.playStatus = 'Busted [' + cardTotal.toString() + ']';
+      this._playStatus = 'Busted [' + cardTotal.toString() + ']';
     } else {
-      this.playStatus = cardTotal.toString();
+      this._playStatus = cardTotal.toString();
     }
   }
 
   updateCountTotal() {
-    this.countForHand = CardUtilities.calculateCount(this.cards);
+    this._countForHand = CardUtilities.calculateCount(this._cards);
   }
+
   /**
    * updateButtonStatesBasedOnTotal  to disable the Hit button if the
    * player has busted.
    */
   updateButtonStatesBasedOnTotal(cardTotal: number) {
     if (cardTotal > BlackjackConstants.maxScore) {
-      this.requestHitEnabled = false;
+      this._requestHitEnabled = false;
       this.requestStandEnabled = false;
     }
   }
@@ -90,17 +137,10 @@ export class GameParticipantComponent implements OnInit {
    * closest to 21 in the event that the participants have 1..N Aces.
    */
   calculateScore() {
-    const totalCardValue = CardUtilities.calculateScore(this.cards);
+    const totalCardValue = CardUtilities.calculateScore(this._cards);
     this.updatePlayStatus(totalCardValue);
     this.updateButtonStatesBasedOnTotal(totalCardValue);
     return totalCardValue;
-  }
-
-
-  get gameStarted()
-  {
-    return this._gameStarted;
-
   }
 
 }

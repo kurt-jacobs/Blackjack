@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
   dealerTitle = 'Dealer';
   playerTitle = 'Player';
 
-
   constructor(private cardService: CardService) {
 
   }
@@ -24,9 +23,12 @@ export class AppComponent implements OnInit {
 
   }
 
-  toggleHighlight() {
-    this.player.toggleHighlight();
-    this.dealer.toggleHighlight();
+  /**
+   * Proxy to the game participants components - dealer and player.
+   */
+  toggleAssist() {
+    this.player.toggleAssist();
+    this.dealer.toggleAssist();
   }
 
   /**
@@ -37,11 +39,11 @@ export class AppComponent implements OnInit {
     this.cardService.dealCards();
   }
 
-  requestHitDisabled() {
+  get hitDisabled() {
     return !this.player.requestHitEnabled;
   }
 
-  requestStandDisabled() {
+  get standDisabled() {
     return !this.player.requestStandEnabled;
   }
 

@@ -7,7 +7,7 @@
   <div class="row top">
     <div class="col-xs-2">
       <p class="ex1">
-        <button (click)="toggleHighlight()" type="button"
+        <button (click)="toggleAssist()" type="button"
                 class="btn spacer btn-lg btn-default"
                 data-toggle="button"
                 style="width: 80%;"
@@ -19,12 +19,12 @@
               style="width: 80%; "
               (click)="dealCards()">Deal
       </button>
-      <button [disabled]="requestHitDisabled()"
+      <button [disabled]="hitDisabled"
               class="btn spacer btn-lg btn-success"
               style="width: 80%;"
               (click)="requestHit()">Hit
       </button>
-      <button [disabled]="requestStandDisabled()"
+      <button [disabled]="standDisabled"
               class="btn spacer btn-lg btn-danger"
               style="width: 80%;"
               (click)="requestStand()">Stand
