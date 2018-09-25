@@ -2,7 +2,6 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {StatsService} from './stats.service';
 import {CardShoeComponent} from '../card-shoe/card-shoe.component';
 import {PlayStatus} from '../shared/play.status';
-import {nullSafeIsEquivalent} from '../../../node_modules/@angular/compiler/src/output/output_ast';
 import {DisplayableCardComponent} from '../deck/cards/displayable-card/displayable-card.component';
 
 @Injectable({

@@ -1,11 +1,31 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {HeaderComponent} from './header/header.component';
+import {StatsComponent} from './stats/stats.component';
+import {PlayerComponent} from './game-participant/player/player.component';
+import {DealerComponent} from './game-participant/dealer/dealer.component';
+import {CardService} from './services/card.service';
+import {StatsService} from './services/stats.service';
+import {DisplayableCardComponent} from './deck/cards/displayable-card/displayable-card.component';
+import {CardShoeComponent} from './card-shoe/card-shoe.component';
+import {DeckComponent} from './deck/deck.component';
+import {GameParticipantComponent} from './game-participant/game-participant.component';
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        DisplayableCardComponent,
+        CardShoeComponent,
+        DeckComponent,
+        GameParticipantComponent,
+        HeaderComponent,
+        StatsComponent,
+        PlayerComponent,
+        DealerComponent
       ],
+      providers: [CardService, StatsService ],
     }).compileComponents();
   }));
   it('should create the app', async(() => {
@@ -13,15 +33,15 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
-  it(`should have as title 'app'`, async(() => {
+  it(`should have as dealer title 'Dealer'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
+    expect(app.dealerTitle).toEqual('Dealer');
   }));
-  it('should render title in a h1 tag', async(() => {
+  it(`should have as player title 'Player'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to blackjack2!');
+    const app = fixture.debugElement.componentInstance;
+    expect(app.playerTitle).toEqual('Player');
   }));
+
 });
