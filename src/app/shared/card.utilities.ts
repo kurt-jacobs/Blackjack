@@ -27,8 +27,8 @@ export class CardUtilities {
         }
       }
       // Convert any Aces to 11 if under 22 total
-      for (let i = 0; i < acesFound && totalCardValue <= BlackjackConstants.maxScore; i++) {
-        if (totalCardValue + this.aceValueDelta <= BlackjackConstants.maxScore) {
+      for (let i = 0; i < acesFound && totalCardValue <= BlackjackConstants.MAX_SCORE; i++) {
+        if (totalCardValue + this.aceValueDelta <= BlackjackConstants.MAX_SCORE) {
           totalCardValue = totalCardValue + this.aceValueDelta;
         }
       }

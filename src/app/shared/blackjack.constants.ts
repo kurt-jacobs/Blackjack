@@ -1,6 +1,7 @@
 export class BlackjackConstants {
   static CARDS_IN_DECK = 52;
-  static maxScore = 21;
+  static MAX_SCORE = 21;
+  static MAXVALUE_REQUIRING_HIT = 17;
 
   /**
    *   Values given to cards depending upon the category the card is in

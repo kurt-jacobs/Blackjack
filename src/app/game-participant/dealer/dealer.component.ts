@@ -3,6 +3,7 @@ import {GameParticipantComponent} from '../game-participant.component';
 import {PlayStatus} from '../../shared/play.status';
 import {DisplayableCardComponent} from '../../deck/cards/displayable-card/displayable-card.component';
 import {CardService} from '../../services/card.service';
+import {BlackjackConstants} from '../../shared/blackjack.constants';
 
 @Component({
   selector: 'app-dealer',
@@ -12,7 +13,6 @@ import {CardService} from '../../services/card.service';
 })
 
 export class DealerComponent extends GameParticipantComponent implements OnInit {
-  maxValueRequiringHit = 17;
 
   constructor(private cardService: CardService) {
     super();
@@ -56,7 +56,7 @@ export class DealerComponent extends GameParticipantComponent implements OnInit 
   }
 
   requestCardIfUnderThreshold(totalScore: number) {
-    while (totalScore < this.maxValueRequiringHit) {
+    while (totalScore < BlackjackConstants.MAXVALUE_REQUIRING_HIT) {
       this.cards.push(this.cardService.requestCard());
       totalScore = this.calculateScore();
       this.updateCountTotal();

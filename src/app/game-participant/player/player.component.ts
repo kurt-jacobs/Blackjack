@@ -43,7 +43,7 @@ export class PlayerComponent extends GameParticipantComponent implements OnInit 
     this.cards.push(this.cardService.requestCard());
     const totalScore = this.calculateScore();
     this.updateCountTotal();
-    if (totalScore > BlackjackConstants.maxScore) {
+    if (totalScore > BlackjackConstants.MAX_SCORE) {
       this.publishBust();
     }
   }

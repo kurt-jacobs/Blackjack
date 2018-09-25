@@ -109,7 +109,7 @@ export class GameParticipantComponent implements OnInit {
    * card or when a card that was face down is now face up.
    */
   updatePlayStatus(cardTotal: number) {
-    if (cardTotal > BlackjackConstants.maxScore) {
+    if (cardTotal > BlackjackConstants.MAX_SCORE) {
       this._playStatus = 'Busted [' + cardTotal.toString() + ']';
     } else {
       this._playStatus = cardTotal.toString();
@@ -125,7 +125,7 @@ export class GameParticipantComponent implements OnInit {
    * player has busted.
    */
   updateButtonStatesBasedOnTotal(cardTotal: number) {
-    if (cardTotal > BlackjackConstants.maxScore) {
+    if (cardTotal > BlackjackConstants.MAX_SCORE) {
       this._requestHitEnabled = false;
       this.requestStandEnabled = false;
     }
