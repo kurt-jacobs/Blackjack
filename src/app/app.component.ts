@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PlayerComponent} from './game-participant/player/player.component';
 import {CardService} from './services/card.service';
-import {GameParticipantComponent} from './game-participant/game-participant.component';
 import {DealerComponent} from './game-participant/dealer/dealer.component';
 
 

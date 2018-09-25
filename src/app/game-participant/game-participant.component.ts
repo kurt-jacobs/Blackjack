@@ -15,6 +15,12 @@ import {BlackjackConstants} from '../shared/blackjack.constants';
 })
 
 export class GameParticipantComponent implements OnInit {
+  static borderMap = new Map([
+    [ BlackjackConstants.LOW_CARD_VALUE, 'border-green' ],
+    [ BlackjackConstants.NEUTRAL_CARD_VALUE , 'border-blue' ],
+    [ BlackjackConstants.HIGH_CARD_VALUE , 'border-red' ]
+  ]);
+
   @Input() title = '';   // Dealer, Player etc.
   cards: DisplayableCardComponent[] = [];
   protected _gameStarted = false;
@@ -42,21 +48,10 @@ export class GameParticipantComponent implements OnInit {
     let styling = 'img-responsive';
 
     if (card) {
-      if (!this.assist) {
+      if (!this.assist || (card.faceUp === false)) {
         styling = styling + ' border-white';
       } else {
-        if (card.faceUp === false) {
-          styling = styling + ' border-white';
-        } else {
-          const countValue = card.countValue;
-          if (countValue === BlackjackConstants.HIGH_CARD_VALUE) {
-            styling = styling + ' border-red';
-          } else if (countValue === BlackjackConstants.LOW_CARD_VALUE) {
-            styling = styling + ' border-green';
-          } else if (countValue === BlackjackConstants.NEUTRAL_CARD_VALUE) {
-            styling = styling + ' border-blue';
-          }
-        }
+        styling = styling + ' ' + GameParticipantComponent.borderMap.get(card.countValue);;
       }
     }
     return styling;
