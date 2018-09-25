@@ -3,7 +3,6 @@ import {DisplayableCardComponent} from '../deck/cards/displayable-card/displayab
 import {CardUtilities} from '../shared/card.utilities';
 import {BlackjackConstants} from '../shared/blackjack.constants';
 
-
 /**
  * GameParticipantComponent is the base class for all who play
  * blackjack (dealer and player).
@@ -24,7 +23,6 @@ export class GameParticipantComponent implements OnInit {
 
   private _requestHitEnabled = true;
   private _requestStandEnabled = true;
-  private _gameStarted = false;
   private _assist = true;
   private _countForHand: number;
   private _playStatus = '';
@@ -46,20 +44,12 @@ export class GameParticipantComponent implements OnInit {
     return this._assist;
   }
 
-  get gameStarted() {
-    return this._gameStarted;
-  }
-
   set playStatus(value: string) {
     this._playStatus = value;
   }
 
   get playStatus(): string {
     return this._playStatus;
-  }
-
-  set gameStarted(gameStarted: boolean) {
-    this._gameStarted = gameStarted;
   }
 
   get countForHand(): number {
@@ -140,7 +130,6 @@ export class GameParticipantComponent implements OnInit {
       this.requestStandEnabled = false;
     }
   }
-
 
   /**
    * calculateScore calculates the score and show the score that is

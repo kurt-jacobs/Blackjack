@@ -1,7 +1,7 @@
-<div class="container" *ngIf="gameStarted">
+<div class="container">
   <div class="row">
     <div class="col-xs-12">
-      <div *ngIf="assist; else noAssist">
+      <div *ngIf="(cards?.length > 0) && assist; else noAssist">
         <h3>{{ title }} ({{ playStatus }}) Count {{ countForHand }}</h3>
       </div>
 
