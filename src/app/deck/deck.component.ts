@@ -58,6 +58,4 @@ export class DeckComponent implements OnInit {
   ngOnInit() {
 
   }
-
-
 }

@@ -25,7 +25,7 @@ export class GameParticipantComponent implements OnInit {
   private _requestHitEnabled = true;
   private _requestStandEnabled = true;
   private _gameStarted = false;
-  private assist = true;
+  private _assist = true;
   private _countForHand: number;
   private _playStatus = '';
   private _cards: DisplayableCardComponent[] = [];
@@ -42,6 +42,10 @@ export class GameParticipantComponent implements OnInit {
     this._cards = value;
   }
 
+  get assist(): boolean {
+    return this._assist;
+  }
+
   get gameStarted() {
     return this._gameStarted;
   }
@@ -49,6 +53,7 @@ export class GameParticipantComponent implements OnInit {
   set playStatus(value: string) {
     this._playStatus = value;
   }
+
   get playStatus(): string {
     return this._playStatus;
   }
@@ -81,19 +86,24 @@ export class GameParticipantComponent implements OnInit {
 
   }
 
+  /**
+   * toggleAssist is called to toggle the assist variable which controls
+   * whether or not the user see visual aids (borders, count display)
+   * to determine the card count
+   */
   toggleAssist() {
-    this.assist = !this.assist;
+    this._assist = !this._assist;
   }
 
   /**
-   * delegate to utility class colorCodedBorder to determines the color of the outline to put
-   * around a card
+   * colorCodedBorder returns the proper border for a card.  Border color depends on
+   * count value and whether or not assist is enabled.
    */
   colorCodedBorder(card: DisplayableCardComponent) {
     let styling = 'img-responsive';
 
     if (card) {
-      if (!this.assist || (card.faceUp === false)) {
+      if (!this._assist || (card.faceUp === false)) {
         styling = styling + ' border-white';
       } else {
         styling = styling + ' ' + GameParticipantComponent.borderMap.get(card.countValue);
@@ -121,7 +131,7 @@ export class GameParticipantComponent implements OnInit {
   }
 
   /**
-   * updateButtonStatesBasedOnTotal  to disable the Hit button if the
+   * updateButtonStatesBasedOnTotal to disable the Hit button if the
    * player has busted.
    */
   updateButtonStatesBasedOnTotal(cardTotal: number) {
