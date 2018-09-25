@@ -17,11 +17,14 @@ export class DeckComponent implements OnInit {
   }
 
   static shuffle(deckCards: Card[] , shuffleCnt) {
-    for (let i = 0; i < shuffleCnt; i++) {
-      const rndNo = DeckComponent.getRandomInt(0, (shuffleCnt - 1));
-      const card = deckCards[i];
-      deckCards[i] = deckCards[rndNo];
-      deckCards[rndNo] = card;
+    const timesToShuffle = DeckComponent.getRandomInt(5, 10);
+    for (let tsi = 0 ;  tsi < timesToShuffle; ++tsi) {
+      for (let i = 0; i < shuffleCnt; i++) {
+        const rndNo = DeckComponent.getRandomInt(0, (shuffleCnt - 1));
+        const card = deckCards[i];
+        deckCards[i] = deckCards[rndNo];
+        deckCards[rndNo] = card;
+      }
     }
   }
 
