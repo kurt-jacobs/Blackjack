@@ -88,6 +88,4 @@ export class CardService {
    this.shoe.updateStats(cards);
  }
 
-
-
 }

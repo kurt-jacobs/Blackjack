@@ -22,4 +22,9 @@ describe('DeckComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should create deck of 52 cards ', () => {
+    expect(component.cards.length).toEqual(52);
+  });
+
 });
