@@ -24,7 +24,7 @@ export class StatsComponent implements OnInit, AfterContentInit {
           this.runningStats.lowValue = statsModel.lowValue;
           this.runningStats.neutralValue = statsModel.neutralValue;
           this.runningStats.highValue = statsModel.highValue;
-          this.runningStats.totalValue =  statsModel.totalValue;
+          this.runningStats.totalCountValue =  statsModel.totalCountValue;
           this.runningStats.availableCards = statsModel.availableCards;
 
         }
@@ -46,7 +46,7 @@ export class StatsComponent implements OnInit, AfterContentInit {
 
   get trueCount() {
     const decksLeft = (this.adjustDecksRemaining > 0) ? this.adjustDecksRemaining : 0.1;
-    return Math.round(this.runningStats.totalValue / decksLeft);
+    return Math.round(this.runningStats.totalCountValue / decksLeft);
   }
 
 }

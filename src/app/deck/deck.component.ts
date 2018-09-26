@@ -47,6 +47,7 @@ export class DeckComponent implements OnInit {
   set deckBackingColor(deckColor: string) {
     this._deckColor = deckColor;
   }
+
   get backImagePath(): string {
     return CardConfigModel.deckBackings.get(this._deckColor);
   }

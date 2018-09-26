@@ -2,7 +2,7 @@ export class StatsModel {
   private _highValue: number;
   private _neutralValue: number;
   private _lowValue: number;
-  private _totalValue: number;
+  private _totalCountValue: number;
   private _availableCards: number;
 
   constructor(availableCards: number,
@@ -11,7 +11,7 @@ export class StatsModel {
     this._lowValue = lowValue;
     this._neutralValue = neutralValue;
     this._highValue = highValue;
-    this._totalValue = ((this._lowValue)
+    this._totalCountValue = ((this._lowValue)
       + (this._highValue * -1));
     this._availableCards = availableCards;
   }
@@ -28,8 +28,8 @@ export class StatsModel {
     return this._lowValue;
   }
 
-  get totalValue(): number {
-    return this._totalValue;
+  get totalCountValue(): number {
+    return this._totalCountValue;
   }
 
   get availableCards(): number {
@@ -48,8 +48,8 @@ export class StatsModel {
     this._lowValue = value;
   }
 
-  set totalValue(value: number) {
-    this._totalValue = value;
+  set totalCountValue(value: number) {
+    this._totalCountValue = value;
   }
 
   set availableCards(value: number) {
